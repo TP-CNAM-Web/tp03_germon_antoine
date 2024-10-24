@@ -1,0 +1,5 @@
+[
+    {"ref": "p1", "prix": 21, "libelle": "Playstation 5"},
+    {"ref": "p2", "prix": 80, "libelle": "GTA VII"},
+    {"ref": "p3", "prix": 280, "libelle": "Meta Quest 3s"}
+]

@@ -1,3 +1,2 @@
-<p>boutique works!</p>
-
-<p *ngFor="let item of produits | async">{{ item.ref }} - {{ item.libelle }} - {{ item.prix }} </p> 
+<app-recherche (filtreChange)="mettreAJourFiltre($event)"></app-recherche>
+<app-produit-list [produits]="produitsFiltres"></app-produit-list>

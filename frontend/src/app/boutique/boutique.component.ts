@@ -1,9 +1,7 @@
 // boutique.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 import { Produit } from '../models/produit';
-import { map } from 'rxjs/operators';
 import { RechercheComponent } from '../recherche/recherche.component';
 import { ProduitListComponent } from '../produit-list/produit-list.component';
 
@@ -18,15 +16,21 @@ export class BoutiqueComponent implements OnInit {
   produits: Produit[] = [];
   produitsFiltres: Produit[] = [];
   filtre: { ref: string; libelle: string; prixMax: number | null } = { ref: '', libelle: '', prixMax: null };
+  subscriber: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
     // On récupère les produits une fois au chargement
-    this.apiService.getProduits().subscribe(produits => {
+    this.subscriber = this.apiService.getProduits().subscribe(produits => {
       this.produits = produits;
       this.appliquerFiltre(); // On applique un premier filtre
     });
+  }
+
+  ngOnDestroy() {
+    // On se désabonne de l'observable pour éviter les fuites mémoire
+    this.subscriber.unsubscribe();
   }
 
   mettreAJourFiltre(nouveauFiltre: { ref: string; libelle: string; prixMax: number | null }) {
